@@ -1,7 +1,7 @@
 {
   "name": "[CC-351 v2] HTTP webhook will conditionally upsert record in Salesforce",
   "description": "When there is a new event via HTTP webhook, do action",
-  "version": 17,
+  "version": 18,
   "private": false,
   "concurrency": 1,
   "code": {
@@ -1120,8 +1120,11 @@
                 "toggleCfg": {
                 },
                 "input": {
-                  "message": "Data was neither created nor updated"
+                  "message": "Data was neither created nor updated."
                 },
+                "visible_config_fields": [
+                  "message"
+                ],
                 "uuid": "24551545-8c74-404d-9785-df1252bdd9fd"
               },
               {
