@@ -1,0 +1,1215 @@
+{
+  "name": "[CC-351 v2] HTTP webhook will conditionally upsert record in Salesforce",
+  "description": "When there is a new event via HTTP webhook, do action",
+  "version": 17,
+  "private": false,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "workato_webhooks",
+    "name": "new_event",
+    "as": "f13c0b38",
+    "title": null,
+    "description": "<span class=\"provider\">2co-ins</span> via <span class=\"provider\">HTTP webhook</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "request": {
+        "webhook_type": "form",
+        "payload_schema": "[{\"control_type\":\"text\",\"label\":\"message type\",\"name\":\"message_type\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"message description\",\"name\":\"message_description\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"timestamp\",\"name\":\"timestamp\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"md5 hash\",\"name\":\"md5_hash\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"message id\",\"name\":\"message_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"key count\",\"name\":\"key_count\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"vendor id\",\"name\":\"vendor_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"sale id\",\"name\":\"sale_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"sale date placed\",\"name\":\"sale_date_placed\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"vendor order id\",\"name\":\"vendor_order_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"invoice id\",\"name\":\"invoice_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"recurring\",\"name\":\"recurring\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"payment type\",\"name\":\"payment_type\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"list currency\",\"name\":\"list_currency\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"cust currency\",\"name\":\"cust_currency\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"auth exp\",\"name\":\"auth_exp\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"invoice status\",\"name\":\"invoice_status\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"fraud status\",\"name\":\"fraud_status\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"invoice list amount\",\"name\":\"invoice_list_amount\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"invoice usd amount\",\"name\":\"invoice_usd_amount\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"invoice cust amount\",\"name\":\"invoice_cust_amount\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"customer first name\",\"name\":\"customer_first_name\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"customer last name\",\"name\":\"customer_last_name\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"customer name\",\"name\":\"customer_name\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"customer email\",\"name\":\"customer_email\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"customer phone\",\"name\":\"customer_phone\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"customer ip\",\"name\":\"customer_ip\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"customer ip country\",\"name\":\"customer_ip_country\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"bill street address\",\"name\":\"bill_street_address\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"bill street address2\",\"name\":\"bill_street_address2\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"bill city\",\"name\":\"bill_city\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"bill state\",\"name\":\"bill_state\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"bill postal code\",\"name\":\"bill_postal_code\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"bill country\",\"name\":\"bill_country\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"ship status\",\"name\":\"ship_status\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"ship tracking number\",\"name\":\"ship_tracking_number\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"ship name\",\"name\":\"ship_name\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"ship street address\",\"name\":\"ship_street_address\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"ship street address2\",\"name\":\"ship_street_address2\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"ship city\",\"name\":\"ship_city\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"ship state\",\"name\":\"ship_state\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"ship postal code\",\"name\":\"ship_postal_code\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"ship country\",\"name\":\"ship_country\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"item count\",\"name\":\"item_count\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"item name 1\",\"name\":\"item_name_1\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"item id 1\",\"name\":\"item_id_1\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"item list amount 1\",\"name\":\"item_list_amount_1\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"item usd amount 1\",\"name\":\"item_usd_amount_1\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"item cust amount 1\",\"name\":\"item_cust_amount_1\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"item type 1\",\"name\":\"item_type_1\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"item duration 1\",\"name\":\"item_duration_1\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"item recurrence 1\",\"name\":\"item_recurrence_1\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"item rec list amount 1\",\"name\":\"item_rec_list_amount_1\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"item rec status 1\",\"name\":\"item_rec_status_1\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"item rec date next 1\",\"name\":\"item_rec_date_next_1\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"item rec install billed 1\",\"name\":\"item_rec_install_billed_1\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"order ref\",\"name\":\"order_ref\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"order no\",\"name\":\"order_no\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"product code\",\"name\":\"product_code\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"product name\",\"name\":\"product_name\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"short description\",\"name\":\"short_description\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"long description\",\"name\":\"long_description\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"avangate id\",\"name\":\"avangate_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"product category\",\"name\":\"product_category\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"prices\",\"name\":\"prices\",\"type\":\"string\",\"optional\":true}]",
+        "headers_schema": "[{\"control_type\":\"text\",\"label\":\"Accept\",\"type\":\"string\",\"name\":\"accept\"},{\"control_type\":\"text\",\"label\":\"Accept encoding\",\"type\":\"string\",\"name\":\"accept_encoding\"},{\"control_type\":\"text\",\"label\":\"Cache control\",\"type\":\"string\",\"name\":\"cache_control\"},{\"control_type\":\"text\",\"label\":\"Connection\",\"type\":\"string\",\"name\":\"connection\"},{\"control_type\":\"text\",\"label\":\"Content length\",\"type\":\"string\",\"name\":\"content_length\"},{\"control_type\":\"text\",\"label\":\"Content type\",\"type\":\"string\",\"name\":\"content_type\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Cookie\",\"type\":\"string\",\"name\":\"cookie\"},{\"control_type\":\"text\",\"label\":\"Postman token\",\"type\":\"string\",\"name\":\"postman_token\"},{\"control_type\":\"text\",\"label\":\"User agent\",\"type\":\"string\",\"name\":\"user_agent\"},{\"control_type\":\"text\",\"label\":\"X amzn trace ID\",\"type\":\"string\",\"name\":\"x_amzn_trace_id\"},{\"control_type\":\"text\",\"label\":\"X forwarded for\",\"type\":\"string\",\"name\":\"x_forwarded_for\"},{\"control_type\":\"text\",\"label\":\"X forwarded port\",\"type\":\"string\",\"name\":\"x_forwarded_port\"},{\"control_type\":\"text\",\"label\":\"X forwarded proto\",\"type\":\"string\",\"name\":\"x_forwarded_proto\"}]"
+      },
+      "webhook_suffix": "2co-ins"
+    },
+    "filter": {
+      "conditions": [
+        {
+          "operand": "contains",
+          "lhs": "#{_('data.workato_webhooks.f13c0b38.payload.message_type')}",
+          "rhs": "='CATALOGUE_PRODUCT'"
+        }
+      ],
+      "operand": "and",
+      "type": "compound"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "headers",
+        "label": "Headers",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Accept",
+            "type": "string",
+            "name": "accept"
+          },
+          {
+            "control_type": "text",
+            "label": "Accept encoding",
+            "type": "string",
+            "name": "accept_encoding"
+          },
+          {
+            "control_type": "text",
+            "label": "Cache control",
+            "type": "string",
+            "name": "cache_control"
+          },
+          {
+            "control_type": "text",
+            "label": "Connection",
+            "type": "string",
+            "name": "connection"
+          },
+          {
+            "control_type": "text",
+            "label": "Content length",
+            "type": "string",
+            "name": "content_length"
+          },
+          {
+            "control_type": "text",
+            "label": "Content type",
+            "type": "string",
+            "name": "content_type",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Cookie",
+            "type": "string",
+            "name": "cookie"
+          },
+          {
+            "control_type": "text",
+            "label": "Postman token",
+            "type": "string",
+            "name": "postman_token"
+          },
+          {
+            "control_type": "text",
+            "label": "User agent",
+            "type": "string",
+            "name": "user_agent"
+          },
+          {
+            "control_type": "text",
+            "label": "X amzn trace ID",
+            "type": "string",
+            "name": "x_amzn_trace_id"
+          },
+          {
+            "control_type": "text",
+            "label": "X forwarded for",
+            "type": "string",
+            "name": "x_forwarded_for"
+          },
+          {
+            "control_type": "text",
+            "label": "X forwarded port",
+            "type": "string",
+            "name": "x_forwarded_port"
+          },
+          {
+            "control_type": "text",
+            "label": "X forwarded proto",
+            "type": "string",
+            "name": "x_forwarded_proto"
+          }
+        ]
+      },
+      {
+        "type": "object",
+        "name": "payload",
+        "label": "Payload",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "message type",
+            "name": "message_type",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "message description",
+            "name": "message_description",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "timestamp",
+            "name": "timestamp",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "md5 hash",
+            "name": "md5_hash",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "message id",
+            "name": "message_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "key count",
+            "name": "key_count",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "vendor id",
+            "name": "vendor_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "sale id",
+            "name": "sale_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "sale date placed",
+            "name": "sale_date_placed",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "vendor order id",
+            "name": "vendor_order_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "invoice id",
+            "name": "invoice_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "recurring",
+            "name": "recurring",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "payment type",
+            "name": "payment_type",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "list currency",
+            "name": "list_currency",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "cust currency",
+            "name": "cust_currency",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "auth exp",
+            "name": "auth_exp",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "invoice status",
+            "name": "invoice_status",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "fraud status",
+            "name": "fraud_status",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "invoice list amount",
+            "name": "invoice_list_amount",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "invoice usd amount",
+            "name": "invoice_usd_amount",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "invoice cust amount",
+            "name": "invoice_cust_amount",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "customer first name",
+            "name": "customer_first_name",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "customer last name",
+            "name": "customer_last_name",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "customer name",
+            "name": "customer_name",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "customer email",
+            "name": "customer_email",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "customer phone",
+            "name": "customer_phone",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "customer ip",
+            "name": "customer_ip",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "customer ip country",
+            "name": "customer_ip_country",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "bill street address",
+            "name": "bill_street_address",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "bill street address2",
+            "name": "bill_street_address2",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "bill city",
+            "name": "bill_city",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "bill state",
+            "name": "bill_state",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "bill postal code",
+            "name": "bill_postal_code",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "bill country",
+            "name": "bill_country",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "ship status",
+            "name": "ship_status",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "ship tracking number",
+            "name": "ship_tracking_number",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "ship name",
+            "name": "ship_name",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "ship street address",
+            "name": "ship_street_address",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "ship street address2",
+            "name": "ship_street_address2",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "ship city",
+            "name": "ship_city",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "ship state",
+            "name": "ship_state",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "ship postal code",
+            "name": "ship_postal_code",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "ship country",
+            "name": "ship_country",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "item count",
+            "name": "item_count",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "item name 1",
+            "name": "item_name_1",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "item id 1",
+            "name": "item_id_1",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "item list amount 1",
+            "name": "item_list_amount_1",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "item usd amount 1",
+            "name": "item_usd_amount_1",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "item cust amount 1",
+            "name": "item_cust_amount_1",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "item type 1",
+            "name": "item_type_1",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "item duration 1",
+            "name": "item_duration_1",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "item recurrence 1",
+            "name": "item_recurrence_1",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "item rec list amount 1",
+            "name": "item_rec_list_amount_1",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "item rec status 1",
+            "name": "item_rec_status_1",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "item rec date next 1",
+            "name": "item_rec_date_next_1",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "item rec install billed 1",
+            "name": "item_rec_install_billed_1",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "order ref",
+            "name": "order_ref",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "order no",
+            "name": "order_no",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "product code",
+            "name": "product_code",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "product name",
+            "name": "product_name",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "short description",
+            "name": "short_description",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "long description",
+            "name": "long_description",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "avangate id",
+            "name": "avangate_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "product category",
+            "name": "product_category",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "prices",
+            "name": "prices",
+            "type": "string",
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "extended_input_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Payload configuration",
+        "properties": [
+          {
+            "control_type": "select",
+            "label": "Webhook type",
+            "pick_list": [
+              [
+                "GET request",
+                "get"
+              ],
+              [
+                "PUT/POST with JSON payload",
+                "json"
+              ],
+              [
+                "PUT/POST with XML payload",
+                "xml"
+              ],
+              [
+                "PUT/POST with FORM encoded payload",
+                "form"
+              ],
+              [
+                "PUT/POST with raw binary data",
+                "rawdata"
+              ],
+              [
+                "PUT/POST with unicode text data",
+                "rawdatatxt"
+              ]
+            ],
+            "hint": "Select the HTTP method and payload data type used by webhook. <a href=\"https://support.workato.com/support/solutions/articles/1000241356-http-real-time-webhook-type\" target=\"_blank\">Learn more</a>",
+            "default": "json",
+            "extends_schema": true,
+            "type": "string",
+            "name": "webhook_type",
+            "parent": "request"
+          },
+          {
+            "control_type": "schema-designer",
+            "label": "Payload schema",
+            "sample_data_type": "form",
+            "extends_schema": true,
+            "empty_schema_title": "Describe all fields in your response.",
+            "optional": true,
+            "sticky": true,
+            "type": "string",
+            "name": "payload_schema",
+            "parent": "request"
+          },
+          {
+            "control_type": "schema-designer",
+            "label": "Headers",
+            "extends_schema": true,
+            "empty_schema_title": "Describe all the webhook headers",
+            "optional": true,
+            "sticky": true,
+            "type": "string",
+            "name": "headers_schema",
+            "parent": "request"
+          }
+        ],
+        "override": true
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_webhooks.f13c0b38.payload.prices')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "workato_custom_code",
+            "name": "invoke_custom_ruby_code",
+            "as": "7f67dc14",
+            "title": null,
+            "description": "Execute <span class=\"provider\">ruby</span> code: <span class=\"provider\">Prices</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "code": "output_array=[]\nif input['prices']['regular'].present?\n  \tinput_prices = input['prices']['regular']\n    if input_prices[0][\"amount\"].present? and input_prices[0][\"currency\"].present?\n \t\toutput_array << { price: input_prices[0][\"amount\"], currency: input_prices[0][\"currency\"] }\n    end\nend  \n\t\t\n{ products: output_array }",
+              "name": "Prices",
+              "code_input": {
+                "schema": "[{\"name\":\"prices\",\"type\":\"string\",\"optional\":true,\"label\":\"prices\",\"control_type\":\"text\"}]",
+                "data": {
+                  "prices": "#{_('data.workato_webhooks.f13c0b38.payload.prices')}"
+                }
+              },
+              "code_output_schema_json": "[{\"name\":\"products\",\"type\":\"array\",\"of\":\"object\",\"label\":\"products\",\"optional\":false,\"properties\":[{\"control_type\":\"text\",\"label\":\"price\",\"name\":\"price\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"curency\",\"name\":\"currency\",\"type\":\"string\",\"optional\":false}]}]"
+            },
+            "extended_output_schema": [
+              {
+                "type": "object",
+                "name": "output",
+                "label": "Output",
+                "properties": [
+                  {
+                    "name": "products",
+                    "type": "array",
+                    "of": "object",
+                    "label": "products",
+                    "optional": false,
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "price",
+                        "name": "price",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "curency",
+                        "name": "currency",
+                        "type": "string",
+                        "optional": false
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "code_input",
+                "control_type": "form-schema-builder",
+                "label": "Input",
+                "sticky": true,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "type": "string",
+                    "name": "schema",
+                    "parent": "code_input"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "prices",
+                        "name": "prices",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "code_input.data"
+                      }
+                    ],
+                    "label": "Data",
+                    "type": "object",
+                    "name": "data",
+                    "parent": "code_input"
+                  }
+                ],
+                "override": true
+              }
+            ],
+            "visible_config_fields": [
+              "name",
+              "code_input",
+              "code_output_schema_json",
+              "code",
+              "code_input.data.ver",
+              "code_input.schema",
+              "code_input.data.prices"
+            ],
+            "uuid": "7b164272-9390-4f44-b3ca-57dec41aec17"
+          }
+        ],
+        "uuid": "ddf5230a-6b35-4892-aa8d-51f6253b0d57"
+      },
+      {
+        "number": 3,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_webhooks.f13c0b38.payload.product_code')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 4,
+            "keyword": "try",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+            },
+            "block": [
+              {
+                "number": 5,
+                "provider": "salesforce",
+                "name": "upsert_sobject",
+                "as": "0c2d3e8f",
+                "title": "Upsert Product",
+                "description": "Upsert <span class=\"provider\">Product</span> in <span class=\"provider\">Salesforce</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "sobject_name": "Product",
+                  "primary_key": [
+                    {
+                      "label": "Product Name",
+                      "value": "Name"
+                    },
+                    {
+                      "label": "Product Code",
+                      "value": "ProductCode"
+                    },
+                    {
+                      "label": "Product Description",
+                      "value": "Description"
+                    },
+                    {
+                      "label": "Active",
+                      "value": "IsActive"
+                    },
+                    {
+                      "label": "External ID",
+                      "value": "ExternalId"
+                    },
+                    {
+                      "label": "Quantity Unit Of Measure",
+                      "value": "QuantityUnitOfMeasure"
+                    }
+                  ],
+                  "QuantityUnitOfMeasure": "Each",
+                  "Family": "Processing"
+                },
+                "toggleCfg": {
+                  "IsActive": true,
+                  "QuantityUnitOfMeasure": true,
+                  "Family": false
+                },
+                "input": {
+                  "sobject_name": "Product2",
+                  "query_field": {
+                    "primary_key": "Name\nProductCode\nDescription\nIsActive\nExternalId\nQuantityUnitOfMeasure"
+                  },
+                  "Name": "=_('data.workato_webhooks.f13c0b38.payload.product_name').to_s",
+                  "ProductCode": "=_('data.workato_webhooks.f13c0b38.payload.product_code').to_s",
+                  "Description": "#{_('data.workato_webhooks.f13c0b38.payload.short_description')}",
+                  "ExternalId": "=_('data.workato_webhooks.f13c0b38.payload.avangate_id').to_s",
+                  "IsActive": "true",
+                  "QuantityUnitOfMeasure": "Each",
+                  "Family": "=_('data.workato_webhooks.f13c0b38.payload.product_category').to_s",
+                  "StockKeepingUnit": "=_('data.workato_custom_code.7f67dc14.output.products.first.price').to_s + ' '+_('data.workato_custom_code.7f67dc14.output.products.first.currency').to_s"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "Name",
+                    "control_type": "text",
+                    "label": "Product Name",
+                    "hint": "Search for  where Product Name has this value. If a record already exists, it will be updated. Otherwise, a new record will be created",
+                    "sticky": false,
+                    "custom": false,
+                    "event_title": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "ProductCode",
+                    "control_type": "text",
+                    "label": "Product Code",
+                    "hint": "Search for  where Product Code has this value. If a record already exists, it will be updated. Otherwise, a new record will be created",
+                    "sticky": true,
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "Description",
+                    "control_type": "text-area",
+                    "label": "Product Description",
+                    "hint": "Search for  where Product Description has this value. If a record already exists, it will be updated. Otherwise, a new record will be created",
+                    "sticky": true,
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true
+                  },
+                  {
+                    "type": "boolean",
+                    "name": "IsActive",
+                    "control_type": "checkbox",
+                    "label": "Active",
+                    "hint": "Search for  where Active has this value. If a record already exists, it will be updated. Otherwise, a new record will be created",
+                    "sticky": true,
+                    "optional": true,
+                    "custom": false,
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Active",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "custom": false,
+                      "sfdc_createable": true,
+                      "sfdc_updateable": true,
+                      "type": "boolean",
+                      "name": "IsActive"
+                    },
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "ExternalId",
+                    "control_type": "text",
+                    "label": "External ID",
+                    "hint": "Search for  where External ID has this value. If a record already exists, it will be updated. Otherwise, a new record will be created",
+                    "sticky": true,
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "QuantityUnitOfMeasure",
+                    "control_type": "select",
+                    "label": "Quantity Unit Of Measure",
+                    "hint": "Search for  where Quantity Unit Of Measure has this value. If a record already exists, it will be updated. Otherwise, a new record will be created",
+                    "sticky": true,
+                    "pick_list": "sobject_field_values_list",
+                    "pick_list_params": {
+                      "sobject_name": "\"Product2\""
+                    },
+                    "optional": true,
+                    "custom": false,
+                    "toggle_hint": "Select from list",
+                    "toggle_field": {
+                      "control_type": "text",
+                      "label": "Quantity Unit Of Measure",
+                      "toggle_hint": "Enter custom value",
+                      "optional": true,
+                      "custom": false,
+                      "sfdc_createable": true,
+                      "sfdc_updateable": true,
+                      "type": "string",
+                      "name": "QuantityUnitOfMeasure"
+                    },
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "DisplayUrl",
+                    "control_type": "url",
+                    "label": "Display URL",
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "ExternalDataSourceId",
+                    "control_type": "text",
+                    "label": "External Data Source ID",
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "Family",
+                    "control_type": "select",
+                    "label": "Product Family",
+                    "pick_list": "sobject_field_values_list",
+                    "pick_list_params": {
+                      "sobject_name": "\"Product2\""
+                    },
+                    "optional": true,
+                    "custom": false,
+                    "toggle_hint": "Select from list",
+                    "toggle_field": {
+                      "control_type": "text",
+                      "label": "Product Family",
+                      "toggle_hint": "Enter custom value",
+                      "optional": true,
+                      "custom": false,
+                      "sfdc_createable": true,
+                      "sfdc_updateable": true,
+                      "type": "string",
+                      "name": "Family"
+                    },
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "StockKeepingUnit",
+                    "control_type": "text",
+                    "label": "Product SKU",
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true
+                  }
+                ],
+                "visible_config_fields": [
+                  "sobject_name",
+                  "query_field",
+                  "query_field.primary_key",
+                  "Name",
+                  "ProductCode",
+                  "Description",
+                  "IsActive",
+                  "ExternalId",
+                  "QuantityUnitOfMeasure",
+                  "Family",
+                  "StockKeepingUnit"
+                ],
+                "uuid": "a1cd43f5-74f1-4865-9052-0ce38279311d"
+              },
+              {
+                "number": 6,
+                "as": "1c0a800c",
+                "keyword": "catch",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "max_retry_count": "3",
+                  "retry_interval": "10"
+                },
+                "block": [
+                  {
+                    "number": 7,
+                    "provider": "logger",
+                    "name": "log_message",
+                    "as": "5e6bc434",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "message": "#{_('data.catch.1c0a800c.message')}"
+                    },
+                    "uuid": "f7b8de8d-4daa-41ec-a5f9-712a38eabaf2"
+                  },
+                  {
+                    "number": 8,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "false"
+                    },
+                    "uuid": "e1dfeccf-4ca7-4c85-aaed-ad4311a24fcb"
+                  }
+                ],
+                "uuid": "70086094-6888-42fc-ad45-ef7cb60aeca7"
+              }
+            ],
+            "uuid": "a5752202-6aeb-4dd6-ab5e-bddb5172f1c7"
+          },
+          {
+            "number": 9,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "blank",
+                  "lhs": "#{_('data.salesforce.0c2d3e8f.id')}",
+                  "rhs": null
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 10,
+                "provider": "logger",
+                "name": "log_message",
+                "as": "2d5d8ed6",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "message": "Data was neither created nor updated"
+                },
+                "uuid": "24551545-8c74-404d-9785-df1252bdd9fd"
+              },
+              {
+                "number": 11,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "false"
+                },
+                "uuid": "0a278a0c-98b3-4bf4-8da8-44680a63793a"
+              }
+            ],
+            "uuid": "e5550505-3631-4763-8269-7efe55698434"
+          },
+          {
+            "number": 12,
+            "keyword": "else",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+            },
+            "block": [
+              {
+                "number": 13,
+                "provider": "logger",
+                "name": "log_message",
+                "as": "2002baf6",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "message": "#{_('data.workato_webhooks.f13c0b38.payload.message_type')}"
+                },
+                "uuid": "a35608db-934f-43b1-b93f-50c84e11da6a"
+              },
+              {
+                "number": 14,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "false"
+                },
+                "uuid": "3ec48407-4fd5-4154-9b3e-e0dc92476948"
+              }
+            ],
+            "uuid": "615db394-012c-4eb3-b8c3-2e1124f29efe"
+          }
+        ],
+        "uuid": "fe6b8c13-b298-41fe-88ad-a27f0ee0636c"
+      }
+    ],
+    "uuid": "2e80f453-3372-40bf-acaa-39b628943118",
+    "wizardFinished": true
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_webhooks",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "account_id": {
+        "zip_name": "my_third_salesforce_account.connection.json",
+        "name": "My third Salesforce account",
+        "folder": ""
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_custom_code",
+      "account_id": null
+    }
+  ]
+}
